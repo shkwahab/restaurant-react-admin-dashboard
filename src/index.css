@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+#scrollBar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+#scrollBar::-webkit-scrollbar {
+    display: none;
+}
