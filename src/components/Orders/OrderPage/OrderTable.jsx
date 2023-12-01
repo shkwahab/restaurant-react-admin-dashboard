@@ -189,7 +189,7 @@ const OrderTable = () => {
         state.filterOrderList = filterOrderList;
         state.filterOrderStatusList = filterStatusOrderList
     }, [filterOrderList, filterStatusOrderList]);
-    const ITEMS_PER_PAGE = 2;
+    const ITEMS_PER_PAGE = 10;
     const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
     const endIndex = startIndex + ITEMS_PER_PAGE;
     let total = orderList.length;
@@ -233,7 +233,7 @@ const OrderTable = () => {
             }
         </>
     }
-
+    const MAX_PAGE_BUTTONS = 4
     const PaginatedOrderList = () => {
 
         return (
@@ -256,16 +256,68 @@ const OrderTable = () => {
                             </button>
                         </div>
                         <div>
-                            <div className="flex space-x-5">
-                                {Array.from({ length: totalPages }).map((_, index) => (
-                                    <button
-                                        key={index}
-                                        onClick={() => handlePageChange(index + 1)}
-                                        className={`flex items-center text-lg px-4 p-2 rounded-full font-bold text-buttonPrimary ${currentPage === index + 1 && 'bg-buttonPrimary text-white'}`}
-                                    >
-                                        {index + 1}
-                                    </button>
-                                ))}
+                            <div className="flex items-center space-x-5">
+                                {Array.from({ length: totalPages }).map((_, index) => {
+                                    const isFirstPage = index === 0;
+                                    const isLastPage = index === totalPages - 1;
+                                    const isCurrentPage = currentPage === index + 1;
+
+                                    if (totalPages <= MAX_PAGE_BUTTONS) {
+                                        return (
+                                            <button
+                                                key={index}
+                                                onClick={() => handlePageChange(index + 1)}
+                                                className={`flex items-center text-lg px-4 p-2 rounded-full font-bold text-buttonPrimary ${isCurrentPage && 'bg-buttonPrimary text-white'}`}
+                                            >
+                                                {index + 1}
+                                            </button>
+                                        );
+                                    } else {
+                                        const showLeftEllipsis = index === 1 && currentPage > Math.floor(MAX_PAGE_BUTTONS / 2) + 1;
+                                        const showRightEllipsis = index === totalPages - 2 && currentPage < totalPages - Math.floor(MAX_PAGE_BUTTONS / 2);
+
+                                        if (showLeftEllipsis && index === 1) {
+                                            return (
+                                                <>
+                                                    <button
+                                                        key={index}
+                                                        onClick={() => handlePageChange(index + 1)}
+                                                        className={`flex items-center text-lg px-4 p-2 rounded-full font-bold text-buttonPrimary ${isCurrentPage && 'bg-buttonPrimary text-white'}`}
+                                                    >
+                                                        {index + 1}
+                                                    </button>
+                                                    <span key={`ellipsis-${index}`} className="mx-2">...</span>
+                                                </>
+                                            );
+                                        } else if (showRightEllipsis && index === totalPages - 2) {
+                                            return (
+                                                <>
+                                                    <span key={`ellipsis-${index}`} className="mx-2">...</span>
+                                                    <button
+                                                        key={index}
+                                                        onClick={() => handlePageChange(index + 1)}
+                                                        className={`flex items-center text-lg px-4 p-2 rounded-full font-bold text-buttonPrimary ${isCurrentPage && 'bg-buttonPrimary text-white'}`}
+                                                    >
+                                                        {index + 1}
+                                                    </button>
+                                                </>
+                                            );
+                                        } else if (!showLeftEllipsis && !showRightEllipsis) {
+                                            return (
+                                                <button
+                                                    key={index}
+                                                    onClick={() => handlePageChange(index + 1)}
+                                                    className={`flex items-center text-lg px-4 p-2 rounded-full font-bold text-buttonPrimary ${isCurrentPage && 'bg-buttonPrimary text-white'}`}
+                                                >
+                                                    {index + 1}
+                                                </button>
+                                            );
+                                        }
+
+                                        return null;
+                                    }
+                                })}
+
                             </div>
                         </div>
                         <div>
