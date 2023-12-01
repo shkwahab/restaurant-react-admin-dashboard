@@ -240,7 +240,7 @@ const OrderTable = () => {
                 <div className="my-10">
                     <div className="flex font-primary justify-between items-center">
                         <div>
-                            <h3 className="font-semibold text-gray-700">
+                            <h3 className="mr-2 font-semibold text-xs sm:text-base text-gray-700">
                                 Showing {startIndex + 1} to {endIndex} of {total} entries
                             </h3>
                         </div>
@@ -251,8 +251,8 @@ const OrderTable = () => {
                                     className={`flex items-center bg-buttonPrimary text-lg p-2 rounded-full font-bold text-white ${currentPage === 1 && 'opacity-50 cursor-not-allowed'}`}
                                     disabled={currentPage === 1}
                                 >
-                                    <FaAngleDoubleLeft className="text-white" />
-                                    <span className="mx-4">Previous</span>
+                                    <FaAngleDoubleLeft className=" text-xs sm:text-base text-white" />
+                                    <span className="mx-2 sm:mx-4 text-xs sm:text-base ">Previous</span>
                                 </button>
                             </div>
                             <div>
@@ -267,7 +267,7 @@ const OrderTable = () => {
                                                 <button
                                                     key={index}
                                                     onClick={() => handlePageChange(index + 1)}
-                                                    className={`flex items-center text-lg px-4 p-2 rounded-full font-bold text-buttonPrimary ${isCurrentPage && 'bg-buttonPrimary text-white'}`}
+                                                    className={`flex items-center  text-xs sm:text-lg px-3 sm:px-4 p-2 rounded-full font-bold text-buttonPrimary ${isCurrentPage && 'bg-buttonPrimary text-white'}`}
                                                 >
                                                     {index + 1}
                                                 </button>
@@ -282,7 +282,7 @@ const OrderTable = () => {
                                                         <button
                                                             key={index}
                                                             onClick={() => handlePageChange(index + 1)}
-                                                            className={`flex items-center text-lg px-4 p-2 rounded-full font-bold text-buttonPrimary ${isCurrentPage && 'bg-buttonPrimary text-white'}`}
+                                                            className={`flex items-center ttext-xs sm:text-lg px-3 sm:px-4 p-2 rounded-full font-bold text-buttonPrimary ${isCurrentPage && 'bg-buttonPrimary text-white'}`}
                                                         >
                                                             {index + 1}
                                                         </button>
@@ -296,7 +296,7 @@ const OrderTable = () => {
                                                         <button
                                                             key={index}
                                                             onClick={() => handlePageChange(index + 1)}
-                                                            className={`flex items-center text-lg px-4 p-2 rounded-full font-bold text-buttonPrimary ${isCurrentPage && 'bg-buttonPrimary text-white'}`}
+                                                            className={`flex items-center text-xs sm:text-lg px-3 sm:px-4 p-2 rounded-full font-bold text-buttonPrimary ${isCurrentPage && 'bg-buttonPrimary text-white'}`}
                                                         >
                                                             {index + 1}
                                                         </button>
@@ -307,7 +307,7 @@ const OrderTable = () => {
                                                     <button
                                                         key={index}
                                                         onClick={() => handlePageChange(index + 1)}
-                                                        className={`flex items-center text-lg px-4 p-2 rounded-full font-bold text-buttonPrimary ${isCurrentPage && 'bg-buttonPrimary text-white'}`}
+                                                        className={`flex items-center text-xs sm:text-lg px-3 sm:px-4 p-2 rounded-full font-bold text-buttonPrimary ${isCurrentPage && 'bg-buttonPrimary text-white'}`}
                                                     >
                                                         {index + 1}
                                                     </button>
@@ -323,10 +323,10 @@ const OrderTable = () => {
                             <div>
                                 <button
                                     onClick={() => handlePageChange(currentPage + 1)}
-                                    className={`flex items-center bg-buttonPrimary text-lg p-2 rounded-full font-bold text-white ${currentPage === totalPages && 'opacity-50 cursor-not-allowed'}`}
+                                    className={`flex items-center bg-buttonPrimary text-xs sm:text-lg px-3 sm:px-4 p-2 rounded-full font-bold text-white ${currentPage === totalPages && 'opacity-50 cursor-not-allowed'}`}
                                     disabled={currentPage === totalPages}
                                 >
-                                    <span className="ml-4">Next</span>
+                                    <span className="ml-2 sm:ml-4">Next</span>
                                     <FaAngleDoubleRight className="text-white mx-2" />
                                 </button>
                             </div>

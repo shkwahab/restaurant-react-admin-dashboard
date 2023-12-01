@@ -54,23 +54,23 @@ const OrderPageFilter = () => {
 
     return (
         <div className='flex justify-between'>
-            <div className='text-secondary'>
+            <div className='text-secondary mr-1 text-sm sm:text-base'>
                 Here is your order list data
             </div>
-            <div className='grid grid-cols-2 gap-x-4'>
+            <div className='grid grid-cols-2  gap-x-4'>
                 <div className='relative'>
                     <div onClick={() => {
                         setShowStatus(!showStatus)
-                    }} className="flex cursor-default bg-gray-100 items-center font-semibold p-4 rounded-full text-buttonPrimary">
-                        <AiOutlineThunderbolt className='mx-2 font-bold text-lg' />
-                        <button className=" capitalize">
-                            {snap.orderStatusFilterCriteria}
+                    }} className="flex cursor-default bg-gray-100 items-center font-semibold p-2 pr-4   sm:p-4 rounded-full text-buttonPrimary">
+                        <AiOutlineThunderbolt className='mx-2 font-bold  sm:block hidden text-lg' />
+                        <button className=" capitalize text-xs sm:text-base">
+                            {snap.orderStatusFilterCriteria} 
                         </button>
-                        <IoIosArrowDown className='mx-2 font-bold text-lg' />
+                        <IoIosArrowDown className='mx-2 font-bold sm:block hidden ' />
                     </div>
-                    <div className={`${showStatus ? 'block' : 'hidden'} p-2 right-6 absolute z-10 bg-white  rounded-md shadow-2xl`}>
+                    <div className={`${showStatus ? 'block' : 'hidden'} p-2 right-0 top-16  sm:right-6 absolute z-10 bg-white  rounded-md shadow-2xl`}>
                         {status.map((item, index) => (
-                            <div key={index} onClick={() => { setStatus(item); setShowStatus(false) }} className={`p-2 ${item != snap.orderStatusFilterCriteria ? "text-secondary" : " text-buttonPrimary"}  hover:bg-gray-100 capitalize cursor-pointer `}>{item}</div>
+                            <div key={index} onClick={() => { setStatus(item); setShowStatus(false) }} className={` p-2 ${item != snap.orderStatusFilterCriteria ? "text-secondary" : " text-buttonPrimary"}  hover:bg-gray-100 capitalize cursor-pointer text-sm sm:text-base `}>{item} </div>
                         ))}
                     </div>
                 </div>
@@ -78,14 +78,14 @@ const OrderPageFilter = () => {
                 <div className='relative '>
                     <div onClick={() => {
                         setShowDate(!showDate)
-                    }} className="  flex cursor-pointer bg-gray-100 items-center font-semibold p-4 rounded-full text-buttonPrimary">
-                        <MdOutlineDateRange className='mx-2 font-bold text-lg' />
+                    }} className="  flex cursor-pointer text-xs sm:text-base bg-gray-100 items-center font-semibold p-2 px-5 sm:p-4 rounded-full text-buttonPrimary">
+                        <MdOutlineDateRange className='mx-2 font-bold sm:block hidden text-lg' />
                         <button className="  capitalize">
                             {snap.defaultOrderFilterData}
                         </button>
-                        <IoIosArrowDown className='mx-2 font-bold text-lg' />
+                        <IoIosArrowDown className='sm:mx-2 font-bold text-lg sm:block hidden' />
                     </div>
-                    <div className={`${showDate ? "" : "hidden"}  absolute top-14 right-10 z-10`}>
+                    <div className={`${showDate ? "" : "hidden"}  absolute  top-16 right-1 sm:right-10 z-10`}>
                         <DateRangePicker
                             color="#fff"
                             ranges={[selectionRange]}
