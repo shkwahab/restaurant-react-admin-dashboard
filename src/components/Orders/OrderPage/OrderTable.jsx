@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import state from '../../../proxyState/store'
+import { FaAngleDoubleLeft, FaAngleDoubleRight } from "react-icons/fa";
 import { useSnapshot } from 'valtio'
-
+// import ReactPaginate from 'react-paginate';
 
 export const orderList = [
     {
@@ -56,9 +57,10 @@ export const orderList = [
 ]
 const OrderTable = () => {
     const snap = useSnapshot(state)
-    state.filterOrderLength = orderList.length;
+
     const [filterOrderList, setFilterOrderList] = useState([]);
     const [filterStatusOrderList, setFilterStatusOrderList] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
 
     const MonthNames = [
         {
@@ -183,11 +185,106 @@ const OrderTable = () => {
     }, [snap.orderStatusFilterCriteria, dateFilterDAte, singleDateFilter, rangeDateFilter]);
 
     useEffect(() => {
-        state.filterOrderLength=filterOrderList.length;
-        state.filterOrderStatusLength=filterStatusOrderList.length
-    }, [filterOrderList,filterStatusOrderList]);
+        state.filterOrderLength = filterOrderList.length;
+        state.filterOrderStatusLength = filterStatusOrderList.length
+        state.filterOrderList = filterOrderList;
+        state.filterOrderStatusList = filterStatusOrderList
+    }, [filterOrderList, filterStatusOrderList]);
+    const ITEMS_PER_PAGE = 2;
+    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+    const endIndex = startIndex + ITEMS_PER_PAGE;
+    let total = orderList.length;
 
-    
+    if (snap.orderStatusFilterCriteria === 'All Status') {
+        total = snap.filterOrderLength;
+    } else {
+        total = snap.filterOrderStatusLength;
+    }
+    const totalPages = Math.ceil(total / ITEMS_PER_PAGE);
+
+    const handlePageChange = (newPage) => {
+        setCurrentPage(newPage);
+    };
+    const currentItems = snap.orderStatusFilterCriteria === 'All Status' ? filterOrderList.slice(startIndex, endIndex) : filterStatusOrderList.slice(startIndex, endIndex);
+    const Items = () => {
+        return <>
+            {
+                currentItems.map((order, index) => {
+                    return <tr key={order.orderId} className='my-4'>
+                        <td className="p-4 text-sm font-normal text-secondary whitespace-nowrap ">
+                            {order.orderId}
+                        </td>
+                        <td className="p-4 text-sm font-normal text-secondary whitespace-nowrap ">
+                            {order.date}
+                        </td>
+                        <td className="p-4 text-sm  text-secondary whitespace-nowrap ">
+                            {order.customerName}
+                        </td>
+                        <td className="p-4 text-sm font-normal text-secondary whitespace-nowrap ">
+                            {order.location}
+                        </td>
+                        <td className="inline-flex items-center p-4 space-x-2 text-sm font-normal text-secondary whitespace-nowrap ">
+                            ${order.amount}
+                        </td>
+                        <td className={`p-4 whitespace-nowrap ${order.statusOrder === "On Delivery" ? "text-buttonPrimary" : ""} ${order.statusOrder === "Delivered" ? "text-green-600" : ""} ${order.statusOrder === "Cancelled" ? "text-red-600" : ""} ${order.statusOrder === "New Order" ? "text-pink-500" : ""}`}>
+                            {order.statusOrder}
+                        </td>
+                    </tr>
+                })
+            }
+        </>
+    }
+
+    const PaginatedOrderList = () => {
+
+        return (
+            <div className="my-10">
+                <div className="flex font-primary justify-between items-center">
+                    <div>
+                        <h3 className="font-semibold text-gray-700">
+                            Showing {startIndex + 1} to {endIndex} of {total} entries
+                        </h3>
+                    </div>
+                    <div className="flex space-x-5">
+                        <div>
+                            <button
+                                onClick={() => handlePageChange(currentPage - 1)}
+                                className={`flex items-center bg-buttonPrimary text-lg p-2 rounded-full font-bold text-white ${currentPage === 1 && 'opacity-50 cursor-not-allowed'}`}
+                                disabled={currentPage === 1}
+                            >
+                                <FaAngleDoubleLeft className="text-white" />
+                                <span className="mx-4">Previous</span>
+                            </button>
+                        </div>
+                        <div>
+                            <div className="flex space-x-5">
+                                {Array.from({ length: totalPages }).map((_, index) => (
+                                    <button
+                                        key={index}
+                                        onClick={() => handlePageChange(index + 1)}
+                                        className={`flex items-center text-lg px-4 p-2 rounded-full font-bold text-buttonPrimary ${currentPage === index + 1 && 'bg-buttonPrimary text-white'}`}
+                                    >
+                                        {index + 1}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                        <div>
+                            <button
+                                onClick={() => handlePageChange(currentPage + 1)}
+                                className={`flex items-center bg-buttonPrimary text-lg p-2 rounded-full font-bold text-white ${currentPage === totalPages && 'opacity-50 cursor-not-allowed'}`}
+                                disabled={currentPage === totalPages}
+                            >
+                                <span className="ml-4">Next</span>
+                                <FaAngleDoubleRight className="text-white mx-2" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    };
+
 
     return (
         <div>
@@ -220,60 +317,17 @@ const OrderTable = () => {
                                 </thead>
                                 <tbody className="bg-white ">
                                     {
-                                        snap.orderStatusFilterCriteria === "All Status" ?
-                                            filterOrderList.map((order, index) => {
-                                                return <tr key={order.orderId} className='my-4'>
-                                                    <td className="p-4 text-sm font-normal text-secondary whitespace-nowrap ">
-                                                        {order.orderId}
-                                                    </td>
-                                                    <td className="p-4 text-sm font-normal text-secondary whitespace-nowrap ">
-                                                        {order.date}
-                                                    </td>
-                                                    <td className="p-4 text-sm  text-secondary whitespace-nowrap ">
-                                                        {order.customerName}
-                                                    </td>
-                                                    <td className="p-4 text-sm font-normal text-secondary whitespace-nowrap ">
-                                                        {order.location}
-                                                    </td>
-                                                    <td className="inline-flex items-center p-4 space-x-2 text-sm font-normal text-secondary whitespace-nowrap ">
-                                                        ${order.amount}
-                                                    </td>
-                                                    <td className={`p-4 whitespace-nowrap ${order.statusOrder === "On Delivery" ? "text-buttonPrimary" : ""} ${order.statusOrder === "Delivered" ? "text-green-600" : ""} ${order.statusOrder === "Cancelled" ? "text-red-600" : ""} ${order.statusOrder === "New Order" ? "text-pink-500" : ""}`}>
-                                                        {order.statusOrder}
-                                                    </td>
-                                                </tr>
-                                            }) :
-                                            filterStatusOrderList.map((order, index) => {
-                                                return <tr key={order.orderId} className='my-4'>
-                                                    <td className="p-4 text-sm font-normal text-secondary whitespace-nowrap ">
-                                                        {order.orderId}
-                                                    </td>
-                                                    <td className="p-4 text-sm font-normal text-secondary whitespace-nowrap ">
-                                                        {order.date}
-                                                    </td>
-                                                    <td className="p-4 text-sm  text-secondary whitespace-nowrap ">
-                                                        {order.customerName}
-                                                    </td>
-                                                    <td className="p-4 text-sm font-normal text-secondary whitespace-nowrap ">
-                                                        {order.location}
-                                                    </td>
-                                                    <td className="inline-flex items-center p-4 space-x-2 text-sm font-normal text-secondary whitespace-nowrap ">
-                                                        ${order.amount}
-                                                    </td>
-                                                    <td className={`p-4 whitespace-nowrap ${order.statusOrder === "On Delivery" ? "text-buttonPrimary" : ""} ${order.statusOrder === "Delivered" ? "text-green-600" : ""} ${order.statusOrder === "Cancelled" ? "text-red-600" : ""} ${order.statusOrder === "New Order" ? "text-pink-500" : ""}`}>
-                                                        {order.statusOrder}
-                                                    </td>
-                                                </tr>
-                                            })
+                                        <Items />
                                     }
-                                    {/* <FilterOrderList /> */}
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
             </div>
+            <PaginatedOrderList />
         </div>
+
     )
 }
 

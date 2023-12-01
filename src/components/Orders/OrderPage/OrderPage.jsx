@@ -1,7 +1,6 @@
 import React from 'react'
 import OrderPageFilter from './OrderPageFilter'
 import OrderTable from './OrderTable'
-import OrderPagination from './OrderPagination'
 
 const OrderPage = () => {
     return (
@@ -11,7 +10,7 @@ const OrderPage = () => {
             </h2>
             <OrderPageFilter />
             <OrderTable />
-            <OrderPagination />
+            
         </div>
     )
 }

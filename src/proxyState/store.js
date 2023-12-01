@@ -8,6 +8,9 @@ const state = proxy({
     defaultOrderFilterData: "today",
     filterOrderLength: 0,
     filterOrderStatusLength: 0,
+    filterOrderList:"",
+    filterOrderStatusList:""
+
 })
 
 export default state
