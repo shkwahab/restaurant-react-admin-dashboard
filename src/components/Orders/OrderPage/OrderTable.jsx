@@ -235,74 +235,34 @@ const OrderTable = () => {
     }
     const MAX_PAGE_BUTTONS = 4
     const PaginatedOrderList = () => {
-
-        return (
-            <div className="my-10">
-                <div className="flex font-primary justify-between items-center">
-                    <div>
-                        <h3 className="font-semibold text-gray-700">
-                            Showing {startIndex + 1} to {endIndex} of {total} entries
-                        </h3>
-                    </div>
-                    <div className="flex space-x-5">
+        if(total>0){
+            return (
+                <div className="my-10">
+                    <div className="flex font-primary justify-between items-center">
                         <div>
-                            <button
-                                onClick={() => handlePageChange(currentPage - 1)}
-                                className={`flex items-center bg-buttonPrimary text-lg p-2 rounded-full font-bold text-white ${currentPage === 1 && 'opacity-50 cursor-not-allowed'}`}
-                                disabled={currentPage === 1}
-                            >
-                                <FaAngleDoubleLeft className="text-white" />
-                                <span className="mx-4">Previous</span>
-                            </button>
+                            <h3 className="font-semibold text-gray-700">
+                                Showing {startIndex + 1} to {endIndex} of {total} entries
+                            </h3>
                         </div>
-                        <div>
-                            <div className="flex items-center space-x-5">
-                                {Array.from({ length: totalPages }).map((_, index) => {
-                                    const isFirstPage = index === 0;
-                                    const isLastPage = index === totalPages - 1;
-                                    const isCurrentPage = currentPage === index + 1;
-
-                                    if (totalPages <= MAX_PAGE_BUTTONS) {
-                                        return (
-                                            <button
-                                                key={index}
-                                                onClick={() => handlePageChange(index + 1)}
-                                                className={`flex items-center text-lg px-4 p-2 rounded-full font-bold text-buttonPrimary ${isCurrentPage && 'bg-buttonPrimary text-white'}`}
-                                            >
-                                                {index + 1}
-                                            </button>
-                                        );
-                                    } else {
-                                        const showLeftEllipsis = index === 1 && currentPage > Math.floor(MAX_PAGE_BUTTONS / 2) + 1;
-                                        const showRightEllipsis = index === totalPages - 2 && currentPage < totalPages - Math.floor(MAX_PAGE_BUTTONS / 2);
-
-                                        if (showLeftEllipsis && index === 1) {
-                                            return (
-                                                <>
-                                                    <button
-                                                        key={index}
-                                                        onClick={() => handlePageChange(index + 1)}
-                                                        className={`flex items-center text-lg px-4 p-2 rounded-full font-bold text-buttonPrimary ${isCurrentPage && 'bg-buttonPrimary text-white'}`}
-                                                    >
-                                                        {index + 1}
-                                                    </button>
-                                                    <span key={`ellipsis-${index}`} className="mx-2">...</span>
-                                                </>
-                                            );
-                                        } else if (showRightEllipsis && index === totalPages - 2) {
-                                            return (
-                                                <>
-                                                    <span key={`ellipsis-${index}`} className="mx-2">...</span>
-                                                    <button
-                                                        key={index}
-                                                        onClick={() => handlePageChange(index + 1)}
-                                                        className={`flex items-center text-lg px-4 p-2 rounded-full font-bold text-buttonPrimary ${isCurrentPage && 'bg-buttonPrimary text-white'}`}
-                                                    >
-                                                        {index + 1}
-                                                    </button>
-                                                </>
-                                            );
-                                        } else if (!showLeftEllipsis && !showRightEllipsis) {
+                        <div className="flex space-x-5">
+                            <div>
+                                <button
+                                    onClick={() => handlePageChange(currentPage - 1)}
+                                    className={`flex items-center bg-buttonPrimary text-lg p-2 rounded-full font-bold text-white ${currentPage === 1 && 'opacity-50 cursor-not-allowed'}`}
+                                    disabled={currentPage === 1}
+                                >
+                                    <FaAngleDoubleLeft className="text-white" />
+                                    <span className="mx-4">Previous</span>
+                                </button>
+                            </div>
+                            <div>
+                                <div className="flex items-center space-x-5">
+                                    { Array.from({ length: totalPages }).map((_, index) => {
+                                        const isFirstPage = index === 0;
+                                        const isLastPage = index === totalPages - 1;
+                                        const isCurrentPage = currentPage === index + 1;
+    
+                                        if (totalPages <= MAX_PAGE_BUTTONS) {
                                             return (
                                                 <button
                                                     key={index}
@@ -312,28 +272,70 @@ const OrderTable = () => {
                                                     {index + 1}
                                                 </button>
                                             );
+                                        } else {
+                                            const showLeftEllipsis = index === 1 && currentPage > Math.floor(MAX_PAGE_BUTTONS / 2) + 1;
+                                            const showRightEllipsis = index === totalPages - 2 && currentPage < totalPages - Math.floor(MAX_PAGE_BUTTONS / 2);
+    
+                                            if (showLeftEllipsis && index === 1) {
+                                                return (
+                                                    <>
+                                                        <button
+                                                            key={index}
+                                                            onClick={() => handlePageChange(index + 1)}
+                                                            className={`flex items-center text-lg px-4 p-2 rounded-full font-bold text-buttonPrimary ${isCurrentPage && 'bg-buttonPrimary text-white'}`}
+                                                        >
+                                                            {index + 1}
+                                                        </button>
+                                                        <span key={`ellipsis-${index}`} className="mx-2">...</span>
+                                                    </>
+                                                );
+                                            } else if (showRightEllipsis && index === totalPages - 2) {
+                                                return (
+                                                    <>
+                                                        <span key={`ellipsis-${index}`} className="mx-2">...</span>
+                                                        <button
+                                                            key={index}
+                                                            onClick={() => handlePageChange(index + 1)}
+                                                            className={`flex items-center text-lg px-4 p-2 rounded-full font-bold text-buttonPrimary ${isCurrentPage && 'bg-buttonPrimary text-white'}`}
+                                                        >
+                                                            {index + 1}
+                                                        </button>
+                                                    </>
+                                                );
+                                            } else if (!showLeftEllipsis && !showRightEllipsis) {
+                                                return (
+                                                    <button
+                                                        key={index}
+                                                        onClick={() => handlePageChange(index + 1)}
+                                                        className={`flex items-center text-lg px-4 p-2 rounded-full font-bold text-buttonPrimary ${isCurrentPage && 'bg-buttonPrimary text-white'}`}
+                                                    >
+                                                        {index + 1}
+                                                    </button>
+                                                );
+                                            }
+    
+                                            return null;
                                         }
-
-                                        return null;
-                                    }
-                                })}
-
+                                    })}
+    
+                                </div>
                             </div>
-                        </div>
-                        <div>
-                            <button
-                                onClick={() => handlePageChange(currentPage + 1)}
-                                className={`flex items-center bg-buttonPrimary text-lg p-2 rounded-full font-bold text-white ${currentPage === totalPages && 'opacity-50 cursor-not-allowed'}`}
-                                disabled={currentPage === totalPages}
-                            >
-                                <span className="ml-4">Next</span>
-                                <FaAngleDoubleRight className="text-white mx-2" />
-                            </button>
+                            <div>
+                                <button
+                                    onClick={() => handlePageChange(currentPage + 1)}
+                                    className={`flex items-center bg-buttonPrimary text-lg p-2 rounded-full font-bold text-white ${currentPage === totalPages && 'opacity-50 cursor-not-allowed'}`}
+                                    disabled={currentPage === totalPages}
+                                >
+                                    <span className="ml-4">Next</span>
+                                    <FaAngleDoubleRight className="text-white mx-2" />
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        );
+            );
+        }
+     
     };
 
 
@@ -343,35 +345,42 @@ const OrderTable = () => {
                 <div className="overflow-x-auto rounded-lg">
                     <div className="inline-block min-w-full align-middle">
                         <div className="overflow-hidden shadow sm:rounded-lg">
-                            <table className="min-w-full divide-y divide-gray-200 ">
-                                <thead className="bg-gray-50 font-bold ">
-                                    <tr>
-                                        <th scope="col" className="p-4 text-xs sm:text-base font-bold tracking-wider text-left text-gray-800 uppercase ">
-                                            Order ID
-                                        </th>
-                                        <th scope="col" className="p-4 text-xs sm:text-base font-bold tracking-wider text-left text-gray-800 uppercase ">
-                                            Date
-                                        </th>
-                                        <th scope="col" className="p-4 text-xs sm:text-base font-bold tracking-wider text-left text-gray-800 uppercase ">
-                                            Customer Name
-                                        </th>
-                                        <th scope="col" className="p-4 text-xs sm:text-base font-bold tracking-wider text-left text-gray-800 uppercase ">
-                                            Location
-                                        </th>
-                                        <th scope="col" className="p-4 text-xs sm:text-base font-bold tracking-wider text-left text-gray-800 uppercase ">
-                                            Amount
-                                        </th>
-                                        <th scope="col" className="p-4 text-xs sm:text-base font-bold tracking-wider text-left text-gray-800 uppercase ">
-                                            Status Order
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody className="bg-white ">
-                                    {
-                                        <Items />
-                                    }
-                                </tbody>
-                            </table>
+                            {total>0 ?
+                                <table className="min-w-full divide-y divide-gray-200 ">
+                                    <thead className="bg-gray-50 font-bold ">
+                                        <tr>
+                                            <th scope="col" className="p-4 text-xs sm:text-base font-bold tracking-wider text-left text-gray-800 uppercase ">
+                                                Order ID
+                                            </th>
+                                            <th scope="col" className="p-4 text-xs sm:text-base font-bold tracking-wider text-left text-gray-800 uppercase ">
+                                                Date
+                                            </th>
+                                            <th scope="col" className="p-4 text-xs sm:text-base font-bold tracking-wider text-left text-gray-800 uppercase ">
+                                                Customer Name
+                                            </th>
+                                            <th scope="col" className="p-4 text-xs sm:text-base font-bold tracking-wider text-left text-gray-800 uppercase ">
+                                                Location
+                                            </th>
+                                            <th scope="col" className="p-4 text-xs sm:text-base font-bold tracking-wider text-left text-gray-800 uppercase ">
+                                                Amount
+                                            </th>
+                                            <th scope="col" className="p-4 text-xs sm:text-base font-bold tracking-wider text-left text-gray-800 uppercase ">
+                                                Status Order
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="bg-white ">
+                                        {
+                                            <Items />
+                                        }
+                                    </tbody>
+                                </table> 
+                                :
+                                <div className='font-primary text-secondary text-2xl font-semibold'>
+                                    No Orders Founds
+                                </div>
+                            }
+
                         </div>
                     </div>
                 </div>
