@@ -54,7 +54,7 @@ const Sidebar = ({ children }) => {
   const path = useLocation().pathname
   return (
     <div>
-      <aside id="default-sidebar" className={`bg-white  ${snap.mobileSidebar===false?" -left-96":""} lg:block fixed top-0 lg:left-0 left-0 z-40 w-64 h-screen  translate-x-0 transition-all duration-500`} aria-label="Sidebar">
+      <aside id="default-sidebar" className={`bg-white  ${snap.mobileSidebar===false?" -left-[380px] ":""} lg:block fixed top-0 lg:left-0 left-0 z-40 w-64 h-screen  translate-x-0 transition-all duration-500`} aria-label="Sidebar">
         <div id="scrollBar" className="h-full px-3 py-4 overflow-y-auto  ">
           <div className="flex items-center  justify-between">
             <div className="">

@@ -78,7 +78,7 @@ const Navbar = () => {
           <div className='hidden lg:flex'>
             {
               widgets.map((widget, index) => {
-                return <div className='lg:ml-8  ' >
+                return <div key={index} className='lg:ml-8  ' >
                   <img src={widget.icon} alt={"widgets"} />
                 </div>
               })
@@ -90,7 +90,7 @@ const Navbar = () => {
           <div className='sm:hidden flex mr-4'>
             {
               mobiwidgets.map((widget, index) => {
-                return <div className='lg:ml-8 mx-2 ' >
+                return <div key={index} className='lg:ml-8 mx-2 ' >
                   <img src={widget.icon} alt={"widgets"} />
                 </div>
               })
@@ -99,7 +99,7 @@ const Navbar = () => {
           <div className='lg:hidden hidden sm:flex mr-4'>
             {
               widgets.map((widget, index) => {
-                return <div className='lg:ml-8 mx-2 ' >
+                return <div key={index} className='lg:ml-8 mx-2 ' >
                   <img src={widget.icon} alt={"widgets"} />
                 </div>
               })
