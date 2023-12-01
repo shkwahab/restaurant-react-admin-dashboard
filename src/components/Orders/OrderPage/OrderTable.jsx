@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import state from '../../../proxyState/store'
 import { FaAngleDoubleLeft, FaAngleDoubleRight } from "react-icons/fa";
 import { useSnapshot } from 'valtio'
-// import ReactPaginate from 'react-paginate';
 
 export const orderList = [
     {
