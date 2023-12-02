@@ -12,3 +12,7 @@
 #scrollBar::-webkit-scrollbar {
     display: none;
 }
+
+.sidebarHide{
+    left: -350px;
+}
