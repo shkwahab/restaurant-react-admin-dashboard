@@ -163,9 +163,16 @@ const OrderTable = () => {
             tempFilterOrderList = orderList
                 .filter((order) => {
                     const endDate = String(rangeDateFilter).toLowerCase().split("-")[1]
+                    const startDate = String(rangeDateFilter).toLowerCase().split("-")[0]
+                    let enddate=undefined;
+
+                    if(endDate){
+                        enddate=endDate.split(" ")[0]
+                        console.log(enddate)
+                    }
                     return order.date === dateFilterDAte
                         || order.date === singleDateFilter || order.date.toLowerCase().includes(String(rangeDateFilter).toLowerCase().split("-")[0])
-                        || order.date.split(" ")[0] <= endDate
+                        || order.date.split(" ")[0] <= enddate&&enddate && order.date.split(" ")[0] >= startDate
                 });
 
             setFilterOrderList(tempFilterOrderList);
@@ -173,9 +180,16 @@ const OrderTable = () => {
             tempFilterStatusOrderList = orderList
                 .filter((order) => {
                     const endDate = String(rangeDateFilter).toLowerCase().split("-")[1]
+                    const startDate = String(rangeDateFilter).toLowerCase().split("-")[0]
+                    let enddate=undefined;
+
+                    if(endDate){
+                        enddate=endDate.split(" ")[0]
+                        console.log(enddate)
+                    }
                     return (order.statusOrder === snap.orderStatusFilterCriteria) && (order.date === dateFilterDAte
                         || order.date === singleDateFilter || order.date.toLowerCase().includes(String(rangeDateFilter).toLowerCase().split("-")[0])
-                        || order.date.split(" ")[0] <= endDate
+                        || order.date.split(" ")[0] <= enddate&&enddate && order.date.split(" ")[0] >= startDate
                     )
                 });
 
